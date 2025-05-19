@@ -1,5 +1,6 @@
 from pathlib import Path
 import argparse
+import csv
 
 def scan_txt_files(directory):
     directory = Path(directory)
@@ -16,13 +17,31 @@ def scan_txt_files(directory):
     print("-" * 52)
 
     total_size = 0
+    output_rows = []
+
     for file in txt_files:
-        size_kb = file.stat().st_size / 1024
+        try:
+            size_kb = file.stat().st_size / 1024
+        except PermissionError:
+            print(f"Permission denied: {file}")
+            continue
+
         total_size += size_kb
-        print(f"{str(file.relative_to(directory)):<40} {size_kb:>10.1f}")
+        relative_path = str(file.relative_to(directory))
+        print(f"{relative_path:<40} {size_kb:>10.1f}")
+        output_rows.append((relative_path, f"{size_kb:.1f}"))
 
     print("-" * 52)
     print(f"Total size: {total_size:.1f} KB\n")
+
+    # Write to output.csv
+    output_file = directory / "output.csv"
+    with output_file.open("w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["file", "size_kb"])
+        writer.writerows(output_rows)
+
+    print(f"Results written to {output_file.resolve()}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Recursively scan directory for .txt files.")
