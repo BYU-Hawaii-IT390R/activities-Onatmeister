@@ -1,0 +1,96 @@
+# Windows Admin Toolkit – Extended Tasks Guide
+
+This guide explains how to use the two newly added tasks in the **Windows Admin Toolkit** script:
+
+* `win-tasks`: Audit Scheduled Tasks
+* `win-vss`: Check Volume Shadow Copy Space Usage
+
+---
+
+## ✅ Requirements
+
+Before running these tasks:
+
+1. **Python 3.x installed**
+2. **`pywin32` package installed**:
+
+   ```bash
+   pip install pywin32
+   ```
+3. **Run Command Prompt or PowerShell as Administrator**
+
+---
+
+## 📆 Task: Audit Scheduled Tasks (`--task win-tasks`)
+
+### What It Does
+
+* Lists all **non-Microsoft** scheduled tasks.
+* Displays their **name** and **next run time**.
+
+### How to Run
+
+```powershell
+python analyze_windows.py --task win-tasks
+```
+
+### Sample Output
+
+```
+📆 Scheduled Task Audit (non-Microsoft)
+Task Name                          Next Run Time
+--------------------------------  -------------------------
+\MyCustomBackupTask               5/25/2025 2:00:00 AM
+\SoftwareUpdater                  5/23/2025 7:30:00 PM
+```
+
+---
+
+## 💾 Task: Check Shadow Copy Space Usage (`--task win-vss`)
+
+### What It Does
+
+* Uses `vssadmin list shadowstorage` to report:
+
+  * **Used Shadow Copy Storage space**
+  * **Maximum Shadow Copy Storage space**
+* Warns if usage exceeds **10%** of maximum.
+
+### How to Run
+
+```powershell
+python analyze_windows.py --task win-vss
+```
+
+### Sample Output
+
+```
+💾 Shadow Copy Space Check
+Used Storage: 5.0 GB
+Max Storage: 50.0 GB
+```
+
+If usage exceeds 10%, you'll see:
+
+```
+⚠️  Warning: Shadow copy storage exceeds 10% of maximum size
+```
+
+---
+
+## ❗ Troubleshooting
+
+* If you get access errors, **run the script as Administrator**.
+* Make sure `vssadmin` and `schtasks` are available in your system path (default on Windows 10/11).
+
+---
+
+## 📂 File Location
+
+Ensure `analyze_windows.py` is in the directory where you're running the command.
+
+You can verify by running:
+
+```bash
+python analyze_windows.py --help
+```
