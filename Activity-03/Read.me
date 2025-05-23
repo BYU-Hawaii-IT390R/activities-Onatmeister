@@ -21,12 +21,12 @@ Before running these tasks:
 
 ---
 
-## 📆 Task: Audit Scheduled Tasks (`--task win-tasks`)
+## 📆 Task: Scheduled Task Auditor (`--task win-tasks`)
 
 ### What It Does
 
-* Lists all **non-Microsoft** scheduled tasks.
-* Displays their **name** and **next run time**.
+* Audits all scheduled tasks on the system and filters out Microsoft defaults.
+* Helps identify custom or third-party tasks and when they are next set to run.
 
 ### How to Run
 
@@ -46,7 +46,7 @@ Task Name                          Next Run Time
 
 ---
 
-## 💾 Task: Check Shadow Copy Space Usage (`--task win-vss`)
+## 💾 Task: Shadow Copy Space Check (`--task win-vss`)
 
 ### What It Does
 
@@ -80,17 +80,23 @@ If usage exceeds 10%, you'll see:
 
 ## ❗ Troubleshooting
 
-* If you get access errors, **run the script as Administrator**.
-* Make sure `vssadmin` and `schtasks` are available in your system path (default on Windows 10/11).
+* **Access Denied Errors**: Be sure to run the script as Administrator.
+* **Command not found**: Ensure Python and the script file are in your system path.
+* **No output?** There may be no tasks or VSS snapshots matching the criteria.
 
 ---
 
-## 📂 File Location
+## 📄 File Info
 
-Ensure `analyze_windows.py` is in the directory where you're running the command.
+* File: `analyze_windows.py`
+* Author: Jonathan Rae Crisanto
+* Course: IT 390R – Windows Administration Tools
+* Tools Used: Python 3.10, pywin32, ChatGPT (OpenAI)
 
-You can verify by running:
+---
 
-```bash
-python analyze_windows.py --help
-```
+## 🧠 AI Citation
+
+Developed with the assistance of ChatGPT (OpenAI) to brainstorm and format Windows automation tasks.
+
+---
