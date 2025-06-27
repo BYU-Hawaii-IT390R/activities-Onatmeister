@@ -1,0 +1,27 @@
+Task 1: Failed Login Analysis
+This task scans the Cowrie SSH honeypot log file to detect failed login attempts and 
+counts how often each IP address appears.
+
+Syntax:
+python analyze_log.py <logfile> --task failed-logins --min-count <number>
+
+What It Does
+*Extracts all failed login events using a predefined regex pattern.
+*Tallies the number of failed attempts per source IP.
+*Filters out IPs that attempted fewer than a specified threshold (--min-count).
+*Displays the results in a table format.
+
+----------------------------------------------------------------------------------------------------- 
+
+Task 3: Successful Credentials Analysis
+This task analyzes the log file to find successful SSH login attempts and reports which 
+username/password combinations were used, along with how many unique IP addresses used each pair.
+
+Syntax:
+python analyze_log.py <logfile> --task successful-creds
+
+What It Does
+*Parses the log for successful login events using a regex pattern.
+*Tracks each (username, password) pair and the unique IPs that used it.
+*Sorts the results by the number of distinct IP addresses using each credential pair.
+
